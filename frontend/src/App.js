@@ -1,0 +1,100 @@
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { AuthProvider } from './context/AuthContext';
+import Navbar from './components/Navbar';
+import Login from './pages/Login';
+import Register from './pages/Register';
+import Dashboard from './pages/Dashboard';
+import DonorDashboard from './pages/DonorDashboard';
+import NGOList from './pages/NGOList';
+import CreateDonation from './pages/CreateDonation';
+import CreateCampaign from './pages/CreateCampaign';
+import DonationHistory from './pages/DonationHistory';
+import DonationTracking from './pages/DonationTracking';
+import NGORegister from './pages/NGORegister';
+import ProofUpload from './pages/ProofUpload';
+import AuditTrail from './pages/AuditTrail';
+
+// Protected route wrapper
+const ProtectedRoute = ({ children, allowedRoles }) => {
+  const user = JSON.parse(localStorage.getItem('user') || '{}');
+  const token = localStorage.getItem('token');
+  
+  if (!token) {
+    return <Navigate to="/login" />;
+  }
+  
+  if (allowedRoles && !allowedRoles.includes(user.role)) {
+    return <Navigate to="/dashboard" />;
+  }
+  
+  return children;
+};
+
+// Dashboard router - shows correct dashboard based on role
+const DashboardRouter = () => {
+  const user = JSON.parse(localStorage.getItem('user') || '{}');
+  
+  if (user.role === 'donor') {
+    return <DonorDashboard />;
+  } else if (user.role === 'ngo_admin') {
+    return <Dashboard />;
+  }
+  
+  return <Navigate to="/login" />;
+};
+
+function App() {
+  return (
+    <AuthProvider>
+      <Router>
+        <div className="App">
+          <Navbar />
+          <Routes>
+            {/* Public routes */}
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/" element={<NGOList />} />
+            <Route path="/ngos" element={<NGOList />} />
+            <Route path="/donation/:id/tracking" element={<DonationTracking />} />
+            
+            {/* Protected routes */}
+            <Route path="/dashboard" element={
+              <ProtectedRoute>
+                <DashboardRouter />
+              </ProtectedRoute>
+            } />
+            
+            {/* Donor routes */}
+            <Route path="/donate" element={
+              <ProtectedRoute allowedRoles={['donor']}>
+                <CreateDonation />
+              </ProtectedRoute>
+            } />
+            <Route path="/history" element={
+              <ProtectedRoute allowedRoles={['donor']}>
+                <DonationHistory />
+              </ProtectedRoute>
+            } />
+            
+            {/* NGO routes */}
+            <Route path="/register-ngo" element={<NGORegister />} />
+            <Route path="/create-campaign" element={
+              <ProtectedRoute allowedRoles={['ngo_admin']}>
+                <CreateCampaign />
+              </ProtectedRoute>
+            } />
+            <Route path="/proof-upload" element={
+              <ProtectedRoute allowedRoles={['ngo_admin']}>
+                <ProofUpload />
+              </ProtectedRoute>
+            } />
+            <Route path="/audit/:ngoId" element={<AuditTrail />} />
+          </Routes>
+        </div>
+      </Router>
+    </AuthProvider>
+  );
+}
+
+export default App;

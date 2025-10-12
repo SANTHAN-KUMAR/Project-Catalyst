@@ -1,0 +1,146 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database for user/ngo data
+  postgres:
+    image: postgres:15-alpine
+    container_name: catalyst-postgres
+    restart: always
+    environment:
+      POSTGRES_USER: catalyst_user
+      POSTGRES_PASSWORD: catty123
+      POSTGRES_DB: catalyst_users
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./db-init/init-postgres.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "5432:5432"
+    networks:
+      - catalyst-net
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U catalyst_user"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # CockroachDB for the audit ledger
+  cockroachdb:
+    image: virag/cockroachdb-s390x:23.1.2
+    container_name: catalyst-cockroach
+    restart: always
+    command: /home/builduser/cockroach/cockroach start-single-node --insecure --listen-addr=0.0.0.0:26257 --http-addr=0.0.0.0:8080
+    volumes:
+      - cockroach_data:/cockroach/cockroach-data
+      - ./db-init/init-cockroach.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "26257:26257"
+      - "8081:8080"
+    networks:
+      - catalyst-net
+    healthcheck:
+      test: ["CMD", "/home/builduser/cockroach/cockroach", "sql", "--insecure", "-e", "SELECT 1;"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+      start_period: 10s
+
+  # Main API Service
+  main-api:
+    build: ./main-api
+    container_name: catalyst-main-api
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      - JWT_SECRET=your-super-secret-key-change-in-production
+      - POSTGRES_USER=catalyst_user
+      - POSTGRES_PASSWORD=catty123
+    volumes:
+      - ./main-api/uploads:/usr/src/app/uploads
+    networks:
+      - catalyst-net
+    depends_on:
+      cockroachdb:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+    command: sh -c "sleep 10 && node index.js"
+
+  # Verification Agent
+  verification-agent:
+    build:
+      context: .
+      dockerfile: verification-agent/Dockerfile
+    container_name: catalyst-verification-agent
+    restart: always
+    ports:
+      - "3001:3001"
+    env_file:
+      - ./verification-agent/.env
+    networks:
+      - catalyst-net
+    depends_on:
+      cockroachdb:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+
+  # Document Analysis Agent
+  document-analysis-agent:
+    build:
+      context: .
+      dockerfile: document-analysis-agent/Dockerfile
+    container_name: catalyst-doc-analysis-agent
+    restart: always
+    ports:
+      - "3003:3003"
+    env_file:
+      - ./document-analysis-agent/.env
+    networks:
+      - catalyst-net
+
+  # Price Checking Agent
+  price-checking-agent:
+    build:
+      context: .
+      dockerfile: price-checking-agent/Dockerfile
+    container_name: catalyst-price-checking-agent
+    restart: always
+    ports:
+      - "3004:3004"
+    env_file:
+      - ./price-checking-agent/.env
+    networks:
+      - catalyst-net
+
+  # Impact Assessment Agent
+  impact-assessment-agent:
+    build: ./impact-assessment-agent
+    container_name: catalyst-impact-agent
+    restart: always
+    ports:
+      - "3002:3002"
+    networks:
+      - catalyst-net
+
+  # Frontend React Application
+  frontend:
+    build: ./frontend
+    container_name: catalyst-frontend
+    restart: always
+    ports:
+      - "3005:3005"
+    environment:
+      - REACT_APP_API_URL=http://148.100.78.160:3000
+    networks:
+      - catalyst-net
+    depends_on:
+      - main-api
+
+networks:
+  catalyst-net:
+    driver: bridge
+
+volumes:
+  postgres_data:
+  cockroach_data:

@@ -1,0 +1,10 @@
+const express = require('express');
+const router = express.Router();
+const donationController = require('../controllers/donationController');
+const authMiddleware = require('../middleware/authMiddleware');
+
+router.post('/create', authMiddleware, donationController.createDonation);
+router.get('/user', authMiddleware, donationController.getUserDonations);
+router.get('/:id', donationController.getDonationById); // PUBLIC - for tracking
+
+module.exports = router;
