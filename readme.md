@@ -35,6 +35,7 @@
 
 ---
 
+## Live Link (Beta) - http://148.100.78.160:3005/login
 ## 🎯 Executive Summary
 
 **Project Catalyst** is a next-generation philanthropy verification platform built on **IBM LinuxONE** that leverages the power of **s390x architecture**, **distributed SQL**, and **AI co-pilots** to create an immutable trust engine for charitable donations.
