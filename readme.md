@@ -93,87 +93,8 @@ We've built a **human-in-the-loop AI verification system** that:
 
 ### High-Level Architecture Diagram
 
-```
-╔═══════════════════════════════════════════════════════════════════════╗
-║                   IBM LinuxONE Emperor 5 (s390x)                      ║
-║   ┌───────────────────────────────────────────────────────────────┐   ║
-║   │         IBM Secure Execution Environment                      │   ║
-║   │   🔒 Hardware-Isolated Enclaves | Pervasive Encryption        │   ║
-║   └───────────────────────────────────────────────────────────────┘   ║
-║                                                                         ║
-║   ┌─────────────────────────────────────────────────────────────┐     ║
-║   │              API Gateway (Port 3000)                         │     ║
-║   │  ┌──────────┬──────────┬──────────┬──────────┬──────────┐   │     ║
-║   │  │   Auth   │Campaign │Donation │  Proof   │  Admin   │   │     ║
-║   │  │  Routes  │ Routes  │ Routes  │ Routes   │ Routes   │   │     ║
-║   │  └──────────┴──────────┴──────────┴──────────┴──────────┘   │     ║
-║   └───────────┬──────────────────────────────────────────────────┘    ║
-║               │                                                        ║
-║   ┌───────────▼────────────────────────────────────────────────┐     ║
-║   │              AI VERIFICATION MICROSERVICES                  │     ║
-║   ├─────────────────────────────────────────────────────────────┤     ║
-║   │  ┌──────────────────┐  ┌──────────────────┐               │     ║
-║   │  │ Document OCR     │  │ Price Checking   │               │     ║
-║   │  │ Agent (3001)     │  │ Agent (3002)     │               │     ║
-║   │  │ Gemini 2.5 Flash │  │ Gemini 2.5 Flash │               │     ║
-║   │  │ • Receipt OCR    │  │ • Market Price   │               │     ║
-║   │  │ • Data Extract   │  │ • Govt Data API  │               │     ║
-║   │  └──────────────────┘  └──────────────────┘               │     ║
-║   │                                                             │     ║
-║   │  ┌──────────────────┐  ┌──────────────────┐               │     ║
-║   │  │ Fraud Detection  │  │ Impact Assessment│               │     ║
-║   │  │ Agent (3003)     │  │ Agent (3004)     │               │     ║
-║   │  │ Gemini 2.5 Flash │  │ Gemini 2.0 Flash │               │     ║
-║   │  │ • Pattern Recog  │  │ • Beneficiary    │               │     ║
-║   │  │ • Anomaly Detect │  │ • KPI Tracking   │               │     ║
-║   │  └──────────────────┘  └──────────────────┘               │     ║
-║   └─────────────┬───────────────────────────────────────────────┘    ║
-║                 │                                                     ║
-║   ┌─────────────▼───────────────────────────────────────────────┐   ║
-║   │              DATABASE LAYER                                  │   ║
-║   ├──────────────────────────────────────────────────────────────┤   ║
-║   │  ┌────────────────────┐  ┌────────────────────────────┐    │   ║
-║   │  │ PostgreSQL         │  │ CockroachDB (Port 26257)   │    │   ║
-║   │  │ (Port 5432)        │  │ ┌────────────────────────┐ │    │   ║
-║   │  │                    │  │ │ Distributed SQL        │ │    │   ║
-║   │  │ • User Accounts    │  │ │ • Audit Trail          │ │    │   ║
-║   │  │ • NGO Profiles     │  │ │ • Blockchain Hashes    │ │    │   ║
-║   │  │ • Campaign Data    │  │ │ • Donation Records     │ │    │   ║
-║   │  │ • Verification     │  │ │ • Smart Contract Logs  │ │    │   ║
-║   │  │   Records          │  │ │ • Chain Validation     │ │    │   ║
-║   │  └────────────────────┘  │ └────────────────────────┘ │    │   ║
-║   │                          │   ACID Compliant          │    │   ║
-║   │                          │   Multi-Region Replication│    │   ║
-║   │                          └────────────────────────────┘    │   ║
-║   └──────────────────────────────────────────────────────────────┘   ║
-║                                                                       ║
-║   ┌───────────────────────────────────────────────────────────────┐ ║
-║   │           BLOCKCHAIN-INSPIRED AUDIT TRAIL                     │ ║
-║   │   ┌─────────┐     ┌─────────┐     ┌─────────┐               │ ║
-║   │   │ Block 1 │────→│ Block 2 │────→│ Block N │               │ ║
-║   │   │ Hash: A │     │ Hash: B │     │ Hash: N │               │ ║
-║   │   │ Prev: 0 │     │ Prev: A │     │ Prev: B │               │ ║
-║   │   └─────────┘     └─────────┘     └─────────┘               │ ║
-║   │   SHA-256 Cryptographic Chaining | Tamper-Proof             │ ║
-║   └───────────────────────────────────────────────────────────────┘ ║
-║                                                                       ║
-║   ┌───────────────────────────────────────────────────────────────┐ ║
-║   │              SMART CONTRACT SIMULATION                        │ ║
-║   │  Event-Driven Fund Release | Escrow Management               │ ║
-║   │  Proof Verified ──→ Release Funds ──→ Update Blockchain      │ ║
-║   └───────────────────────────────────────────────────────────────┘ ║
-║                                                                       ║
-║   ┌───────────────────────────────────────────────────────────────┐ ║
-║   │              EXTERNAL INTEGRATIONS                            │ ║
-║   │  • Google Gemini API (AI Verification)                        │ ║
-║   │  • DataYuge Price API (E-commerce Price Comparison)           │ ║
-║   │  • Govt Price Monitoring Cell (Commodity Prices)              │ ║
-║   │  • NGO Darpan API (NGO Registration Validation)               │ ║
-║   └───────────────────────────────────────────────────────────────┘ ║
-╚═══════════════════════════════════════════════════════════════════════╝
-```
+<img width="3133" height="1936" alt="ibm-arch" src="https://github.com/user-attachments/assets/4db88233-2c90-45dc-bf39-8e816e81f89e" />
 
----
 
 ## 🔷 Why IBM LinuxONE?
 
