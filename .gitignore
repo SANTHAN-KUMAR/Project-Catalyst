@@ -23,8 +23,8 @@ dist-ssr
 *.sln
 *.sw?
 
-# Ignore all environment files anywhere
+# Ignore all env files anywhere
 **/.env
-**/.env.local
-**/.env.*.local
+**/.env.*
+
 
