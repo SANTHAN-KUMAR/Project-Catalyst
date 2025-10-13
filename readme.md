@@ -10,7 +10,7 @@
 
 > *"Where the change begins!"* - Transforming charitable giving from blind faith into **cryptographically verifiable proof-based social investment**.
 
-**Team:** Flow Fixers | **Theme:** Tech for Good | **Competition:** IBM Z Datathon 2025
+**Team:** Flow Fixers (SAV130) | **Theme:** Tech for Good | **Competition:** IBM Z Datathon 2025
 
 ---
 
@@ -35,7 +35,8 @@
 
 ---
 
-## Live Link (Beta) - http://148.100.78.160:3005/login
+# 🚀 Live Demo (Beta) : http://148.100.78.160:3005/login
+
 ## 🎯 Executive Summary
 
 **Project Catalyst** is a next-generation philanthropy verification platform built on **IBM LinuxONE** that leverages the power of **s390x architecture**, **distributed SQL**, and **AI co-pilots** to create an immutable trust engine for charitable donations.
@@ -51,11 +52,10 @@ India's nonprofit sector faces a catastrophic trust deficit:
 ### Our Innovation
 
 We've built a **human-in-the-loop AI verification system** that:
-- ✅ Automatically verifies every expenditure using **Google Gemini 2.0**
+- ✅ Automatically verifies every expenditure using **Google Gemini 2.5**
 - ✅ Creates **immutable blockchain-inspired audit trails** using CockroachDB
 - ✅ Releases funds via **smart contract simulation** only after verification
 - ✅ Runs on **IBM LinuxONE's secure execution environment** for unparalleled security
-- ✅ Achieves **70%+ improvement** in fund delivery efficiency
 
 ---
 
@@ -73,20 +73,7 @@ We've built a **human-in-the-loop AI verification system** that:
 
 ### Traditional Systems vs. Project Catalyst
 
-```
-┌───────────────────────────────────────────────────────────────────┐
-│                    TRADITIONAL NGO SYSTEMS                        │
-├───────────────────────────────────────────────────────────────────┤
-│  Donor → NGO → ??? → ❓ Unverified Claims → ❌ Lost Trust        │
-└───────────────────────────────────────────────────────────────────┘
-
-┌───────────────────────────────────────────────────────────────────┐
-│                      PROJECT CATALYST                             │
-├───────────────────────────────────────────────────────────────────┤
-│  Donor → Escrow → AI Verification → Blockchain Proof →           │
-│  Smart Contract Release → ✅ Cryptographic Certainty             │
-└───────────────────────────────────────────────────────────────────┘
-```
+<img width="3600" height="926" alt="new6" src="https://github.com/user-attachments/assets/674886c6-fdf0-4efe-b586-8488e618f3ba" />
 
 ---
 
@@ -289,7 +276,7 @@ Analyze for fraud patterns:
 **File:** `services/impact-assessment-agent/index.js`
 
 **Technology:**
-- **AI Model:** Google Gemini 2.0 Flash
+- **AI Model:** Google Gemini 2.5 Flash
 - **Purpose:** Verify NGO progress reports & beneficiary counts
 
 **Metrics Extracted:**
@@ -452,7 +439,7 @@ async function recordPromptFeedback(agentType, version, inputHash, wasCorrect) {
 | Document OCR | Gemini 2.5 Flash | 1.2s | 94% | 50,000 docs |
 | Price Checking | Gemini 2.5 Flash | 2.1s | 89% | 30,000 invoices |
 | Fraud Detection | Gemini 2.5 Flash | 1.8s | 91% | 40,000 analyses |
-| Impact Assessment | Gemini 2.0 Flash | 3.5s | 87% | 15,000 reports |
+| Impact Assessment | Gemini 2.5 Flash | 3.5s | 87% | 15,000 reports |
 
 ---
 
@@ -596,7 +583,7 @@ async function releaseFundsAfterVerification(proofId) {
 | **Framework** | Express.js | 4.x | RESTful API framework |
 | **Primary DB** | PostgreSQL | 15+ | User data, campaigns, verifications |
 | **Blockchain DB** | CockroachDB | 23.x | Distributed SQL audit trail |
-| **AI/ML** | Google Gemini 2.0/2.5 | Latest | Document analysis, fraud detection |
+| **AI/ML** | Google Gemini 2.5 | Latest | Document analysis, fraud detection |
 | **Authentication** | JWT (jsonwebtoken) | 9.x | Stateless authentication |
 | **Security** | bcrypt | 5.x | Password hashing |
 | **External APIs** | DataYuge, Govt APIs | - | Price verification |
@@ -1237,29 +1224,28 @@ app.use(helmet({
 ## 🔮 Future Roadmap
 
 ### Phase 1: ✅ Current Implementation (Oct 2025)
-- [x] AI-powered document verification
-- [x] Blockchain-inspired audit trail
-- [x] Smart contract simulation
-- [x] Multi-agent architecture
-- [x] CockroachDB on s390x
+- [x] AI-powered document verification  
+- [x] Blockchain-inspired audit trail  
+- [x] Smart contract simulation  
+- [x] Multi-agent architecture  
+- [x] CockroachDB on s390x  
 
-### Phase 2: Q1 2026
-- [ ] **IBM Spyre Integration** - On-platform LLM inference (8x faster AI)
-- [ ] **Mobile Apps** - Donor and NGO mobile applications
-- [ ] **Real-time Dashboard** - Live campaign monitoring
-- [ ] **Multi-language Support** - Hindi, Tamil, Bengali interfaces
+### Phase 2: Q1-Q2 2026
+- [ ] **IBM Spyre Integration** - On-platform LLM inference (8x faster AI)  
+- [ ] **Mobile Apps** - Donor and NGO mobile applications  
+- [ ] **Real-time Dashboard** - Live campaign monitoring  
+- [ ] **Multi-language Support** - Hindi, Tamil, Bengali interfaces  
+- [ ] **Hybrid Model Fallbacks** - Train local OCR, fraud detection, and price variation models on external datasets to make the architecture more stable  
 
-### Phase 3: Q3 2026
-- [ ] **Decentralized Identity (DID)** - NGO trust passports
-- [ ] **Cross-Border Donations** - International payment gateways
-- [ ] **Impact-Based Dynamic Funding** - KPI-triggered fund releases
-- [ ] **Predictive Fraud Analytics** - ML models for proactive detection
-
-### Phase 4: 2027
-- [ ] **Hyperledger Fabric Migration** - When s390x support arrives
-- [ ] **Federated Learning** - Privacy-preserving AI across NGOs
-- [ ] **Government Integration** - Direct API with NGO Darpan
-- [ ] **Open API Ecosystem** - Third-party developer platform
+### Phase 3: Q3-Q4 2026
+- [ ] **Decentralized Identity (DID)** - NGO trust passports  
+- [ ] **Cross-Border Donations** - International payment gateways  
+- [ ] **Impact-Based Dynamic Funding** - KPI-triggered fund releases  
+- [ ] **Predictive Fraud Analytics** - ML models for proactive detection  
+- [ ] **Hyperledger Fabric Migration** - When s390x support arrives  
+- [ ] **Federated Learning** - Privacy-preserving AI across NGOs  
+- [ ] **Government Integration** - Direct API with NGO Darpan  
+- [ ] **Open API Ecosystem** - Third-party developer platform  
 
 ---
 
@@ -1315,19 +1301,16 @@ This project is licensed under the **MIT License** - see [LICENSE](LICENSE) file
 
 ---
 
-## 📞 Contact & Support
+## Team Details
 
 **Team Flow Fixers**
 
-- **Email:** team@projectcatalyst.org
-- **GitHub:** [github.com/flow-fixers/project-catalyst](https://github.com/flow-fixers/project-catalyst)
-- **IBM Z Datathon:** [Project Submission Portal](https://ibmz-datathon.devpost.com/)
-
-### Project Maintainers
-
-- **Lead Developer:** [Your Name]
-- **AI/ML Engineer:** [Team Member]
-- **DevOps Engineer:** [Team Member]
+- **Leader Architect & Blockchain Developer:** Karnala Santhan Kumar
+- **Backend & DevOps Engineer:** Arikatla Hari Veera Prasad
+- **AI/ML Engineer:** Hanshika Varthini R
+- **Frontend Developer:** Jespiah Shihana
+- **Database Architect:** K Kesava Sai	
+- **Security & Systems Engineer:** Kamireddy Madhava Reddy
 
 ---
 
@@ -1337,19 +1320,10 @@ This project is licensed under the **MIT License** - see [LICENSE](LICENSE) file
 Lines of Code:        ~15,000
 Backend Services:     5 microservices
 Database Tables:      12 (PostgreSQL) + 2 (CockroachDB)
-AI Models Used:       2 (Gemini 2.0 & 2.5)
+AI Models Used:       2 (Gemini 2.5)
 API Endpoints:        45+
 Test Coverage:        87%
-Documentation Pages:  120+
 ```
-
----
-
-## 🏆 Awards & Recognition
-
-- **IBM Z Datathon 2025** - Finalist (Pending)
-- **Best Use of IBM LinuxONE** - (Pending)
-- **Most Innovative AI Application** - (Pending)
 
 ---
 
@@ -1365,7 +1339,6 @@ Documentation Pages:  120+
 
 ## 🔗 Quick Links
 
-- [Live Demo](https://demo.projectcatalyst.ibmz.cloud) (Coming Soon)
 - [API Swagger Docs](https://api.projectcatalyst.ibmz.cloud/docs)
 - [Architecture Deep Dive](./docs/ARCHITECTURE.md)
 - [Testing Guide](./docs/TESTING.md)
@@ -1373,7 +1346,3 @@ Documentation Pages:  120+
 - [IBM Z Resources](https://www.ibm.com/linuxone)
 
 ---
-
-**Last Updated:** October 12, 2025  
-**Version:** 1.0.0  
-**IBM Z Datathon 2025**
