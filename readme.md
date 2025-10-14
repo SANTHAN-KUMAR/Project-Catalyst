@@ -1,4 +1,4 @@
-# 🚀 Project Catalyst - Backend
+# Project Catalyst - Backend
 
 **A Cryptographically Verifiable Trust Engine for Philanthropy on IBM LinuxONE**
 
@@ -35,7 +35,48 @@
 
 ---
 
-# 🚀 Live Demo (Beta) : http://148.100.78.160:3005/login
+---
+
+## 🚀 Live Demo & Walkthrough
+
+Experience Project Catalyst live. You can interact with the platform to see the transparent donation workflow in action.
+
+**Live URL:** [http://148.100.78.160:3005/login](http://148.100.78.160:3005/login)
+
+| Role          | Email                       | Password   |
+|---------------|-----------------------------|------------|
+| **NGO Admin** | `jai@gmail.com`  | `abcdef123`|
+| **Donor** | `jai2@gmail.com`      | `jai2@123` |
+
+---
+
+---
+
+## 🖼️ UI Showcase: The Platform in Action
+
+Here’s a look at the user experience, from the donor's dashboard to the immutable audit trail.
+
+### 1. Donor Dashboard
+*Donors get a real-time overview of their contributions, funds held in escrow, and details of their released funds.*
+
+<img width="1900" height="893" alt="image" src="https://github.com/user-attachments/assets/2bb203d5-d46d-42be-9f3f-d70e10bfbb77" />
+
+### 2. NGO Campaign Management
+*NGOs can easily create and manage their fundraising campaigns, track raised amounts, and monitor progress towards their goals.*
+
+<img width="1900" height="901" alt="image" src="https://github.com/user-attachments/assets/d0a4dfa6-ea1c-46fe-ad5f-f223c1cc6b9d" />
+
+### 3. Transparent Donation Tracking
+*Every donation is tracked on the blockchain-inspired ledger, providing donors with a verifiable record of their contribution.*
+
+<img width="1905" height="896" alt="image" src="https://github.com/user-attachments/assets/1802fe93-603e-4da4-bb79-b9ea76e09a9f" />
+
+### 4. Make a Donation
+*Make your contribution with confidence, knowing AI-powered verification ensures your donation creates real impact.*
+
+<img width="1905" height="896" alt="Screenshot From 2025-10-14 17-53-01" src="https://github.com/user-attachments/assets/dc404619-9db3-413f-b671-1bbe24daa28d" />
+
+---
 
 ## 🎯 Executive Summary
 
@@ -56,7 +97,7 @@ We've built a **human-in-the-loop AI verification system** that:
 - ✅ Creates **immutable blockchain-inspired audit trails** using CockroachDB
 - ✅ Releases funds via **smart contract simulation** only after verification
 - ✅ Runs on **IBM LinuxONE's secure execution environment** for unparalleled security
-
+- ✅Goes beyond generic blockchain platforms by creating a purpose-built trust engine, achieving cryptographic proof and enterprise performance on s390x without the overhead of traditional frameworks.
 ---
 
 ## 🚨 The Problem We're Solving
