@@ -1,4 +1,4 @@
-const pool = require('../config/database');
+const pool = require('../services/database');
 
 exports.uploadProof = async (req, res) => {
   const { campaignId, proofType, description, documentUrl } = req.body;

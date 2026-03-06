@@ -1,4 +1,5 @@
 const { Pool } = require('pg');
+const aiService = require('./aiVerificationService');
 
 const cockroachPool = new Pool({
   user: 'root',
@@ -11,7 +12,7 @@ async function processAuditTrailEvents() {
   let client;
   try {
     client = await cockroachPool.connect();
-    
+
     // Simple direct query - no table check
     const result = await client.query(
       "SELECT * FROM audit_trail WHERE timestamp > now() - INTERVAL '1 minute' ORDER BY timestamp DESC LIMIT 100"
@@ -19,7 +20,7 @@ async function processAuditTrailEvents() {
 
     if (result.rows.length > 0) {
       console.log(`[Smart Contract] Processing ${result.rows.length} events`);
-      
+
       for (const event of result.rows) {
         switch (event.event_type) {
           case 'LEGAL_DOC_VERIFIED':
@@ -46,7 +47,7 @@ async function processAuditTrailEvents() {
 
 function startSmartContractProcessor() {
   console.log('[Smart Contract Processor] Starting background service...');
-  
+
   setTimeout(() => {
     console.log('[Smart Contract Processor] Initial run');
     processAuditTrailEvents();

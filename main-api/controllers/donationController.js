@@ -1,4 +1,4 @@
-const pool = require('../config/database');
+const pool = require('../services/database');
 
 exports.createDonation = async (req, res) => {
   const { campaignId, amount, paymentMethod, message } = req.body;
